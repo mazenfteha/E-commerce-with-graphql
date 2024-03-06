@@ -1,0 +1,33 @@
+{
+  "name": "e-commerce-with-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mazenfteha/E-commerce-with-graphql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mazenfteha/E-commerce-with-graphql/issues"
+  },
+  "homepage": "https://github.com/mazenfteha/E-commerce-with-graphql#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.3",
+    "graphql": "^16.8.1",
+    "graphql-http": "^1.22.0",
+    "ruru": "^2.0.0-beta.11"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
