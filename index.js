@@ -1,10 +1,14 @@
 const express = require("express")
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const dotenv = require('dotenv')
 
 const graphqlIndex  = require('./graphql/index')
 const restIndex = require('./api/index')
+const connectDB = require('./config/db')
 
+dotenv.config();
+connectDB();
 
 const app = express()
 app.use(cors());

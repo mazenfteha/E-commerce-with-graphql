@@ -22,7 +22,7 @@ app.all(
 
 
 // Serve the GraphiQL IDE.
-app.get("/", (_req, res) => {
+app.get("/G", (_req, res) => {
     res.type("html")
     res.end(ruruHTML({ endpoint: "/graphql" }))
 })
