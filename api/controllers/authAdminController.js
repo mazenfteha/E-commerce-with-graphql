@@ -41,25 +41,31 @@ const signin = async (req, res) => {
         const admin = await Admin.findOne({ email });
 
         if (!admin) {
-            throw new StatusCodes.NOT_FOUND(("No user with this Email"))
+            throw new Error("No admin with this email");
         }
 
-        const isMatch = await admin.comparePassword(password);
+        const isMatch = await admin.correctPassword(password);
         if (!isMatch) {
-            throw new StatusCodes.UNAUTHORIZED(("Wrong password"))
+            return res.status(StatusCodes.UNAUTHORIZED).json({
+                message: "Wrong password"
+            })
         }
 
         const payload = neededPayload(admin);
         attachCookieToResponse({ res, payload });
         res.status(StatusCodes.OK).json({admin: payload});
-    } catch (err) {
-        res.status(StatusCodes.UNAUTHORIZED).json("No Admin with this Email")
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({message:` Login failed : ${error.message}`})
     }
 }
 
 const signout = async (req, res) => {
-    res.clearCookie('token');
-    res.status(StatusCodes.OK).json({ message: 'Logged out successfully.' });
+    try {
+        res.clearCookie('token');
+        res.status(StatusCodes.OK).json({ message: 'Logged out successfully.' });
+    } catch (error) {
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: `Logout failed: ${error.message}` });
+    }
 }
 
 module.exports = {signup, signin, signout}

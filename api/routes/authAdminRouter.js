@@ -3,11 +3,14 @@ const router = exress.Router()
 
 const {signup, signin, signout} = require('../controllers/authAdminController');
 const { authenticationAdmin } = require('../../middlewares/authentication');
+const {  registerValidator ,loginValidator } = require('../../utils/authValidator')
 
-router.post('/admin/signup', signup);
+router.post('/admin/signup', registerValidator, signup);
 
-router.post('/admin/signin', signin);
+router.post('/admin/signin', loginValidator, signin);
 
-router.post('/admin/signout', authenticationAdmin ,signout);
+router.use(authenticationAdmin)
+
+router.get('/admin/signout', signout);
 
 module.exports = router;

@@ -1,18 +1,29 @@
 const { isTokenValid } = require('../utils/jwt')
 const { StatusCodes } = require('http-status-codes')
+const Admin = require('../models/Admin')
 
 
 const authenticationAdmin = async (req, res, next) => {
     const token = req.signedCookies.token
     if(!token) {
-        throw new StatusCodes.UNAUTHORIZED("Authentication failed")
+        throw new Error("Authentication failed");
     }
     try {
         const payload = isTokenValid({ token })
-        req.admin = { ...payload };
+        if(!payload || !payload.adminId) {
+            throw new Error("Invalid token");
+        }
+
+        const admin = await Admin.findById(payload.adminId);
+        if(!admin || admin.role !== "admin") {
+            throw new Error("Unauthorized access");
+        }
+
+        req.admin = admin
+        console.log(req.admin)
         next();
     } catch (error) {
-        throw new StatusCodes.UNAUTHORIZED("Authentication failed")
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: error.message });
     }
 }
 
