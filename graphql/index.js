@@ -1,15 +1,18 @@
 const express = require("express")
 const { createHandler } = require("graphql-http/lib/use/express")
-const { schema } = require('./schema/schema')
-const  helloResolver  = require('./resolvers/hello')
 const { ruruHTML } = require("ruru/server")
+
+const { schema } = require('./schema/schema')
+const  { Query }  = require('./resolvers/Query')
+const { Mutation } = require('./resolvers/Mutation')
+
 
 const app = express()
 
 const root = {
-    hello: helloResolver,
+    ...Query,
+    ...Mutation
 };
-
 
 // Create and use the GraphQL handler.
 app.all(
