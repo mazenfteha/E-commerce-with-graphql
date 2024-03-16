@@ -4,6 +4,8 @@ const schema = buildSchema(`
     type Query {
         hello: String
         categories: [Category!]!
+        products: [Product!]!
+        reviews: [Review!]!
     }
 
     type Mutation {
@@ -28,6 +30,7 @@ const schema = buildSchema(`
         onSale: Boolean!
         category: Category
         reviews: [Review!]!
+        categoryId: ID!
     }
 
     type Category {
@@ -39,10 +42,10 @@ const schema = buildSchema(`
 
     type Review {
         id: ID!
-        date: String!
         title: String!
         comment: String!
         rating: Int!
+        productId: ID!
     }
 
     input AddProductInput {
@@ -56,6 +59,7 @@ const schema = buildSchema(`
     }
 
     input UpdateProductInput {
+        id: ID!
         name: String!
         description: String!
         quantity: Int!
@@ -70,17 +74,18 @@ const schema = buildSchema(`
     }
     
     input UpdateCategoryInput {
+        id: ID!
         name: String!
     }
 
     input AddReviewInput {
-        date: String!
         title: String!
         comment: String!
         rating: Int!
         productId: ID!
     }
     input UpdateReviewInput {
+        id: ID!
         date: String!
         title: String!
         comment: String!
